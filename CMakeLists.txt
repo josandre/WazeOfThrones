@@ -3,7 +3,7 @@ project(WazeOfThrones)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(WazeOfThrones main.cpp core/source/ui/SfmlApp.cpp core/header/ui/SfmlApp.h core/source/City.cpp core/header/City.h core/source/Route.cpp core/header/Route.h core/source/Map.cpp core/header/Map.h)
+add_executable(WazeOfThrones main.cpp core/source/ui/SfmlApp.cpp core/header/ui/SfmlApp.h core/source/City.cpp core/header/City.h core/source/Route.cpp core/header/Route.h core/source/Map.cpp core/header/Map.h core/source/Hash.cpp core/header/Hash.h)
 
 set(SFML_DIR /opt/homebrew/Cellar/sfml/2.5.1_2/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics REQUIRED)
