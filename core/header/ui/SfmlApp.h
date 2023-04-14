@@ -16,7 +16,7 @@ private:
 
 public:
     Vector2f normalizeVector(Vector2f source);
-    RectangleShape DrawLine(Vector2f from, Vector2f to, float thickness);
+    RectangleShape DrawLine(Vector2f from, Vector2f to, float thickness, Color color);
     void Run();
 };
 

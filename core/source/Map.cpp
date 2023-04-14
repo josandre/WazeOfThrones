@@ -58,8 +58,16 @@ Map::Map() {
     }
 }
 
-bool Map::AddCity(string name) {
-    City* newCity = new City(name);
+City* Map::GetRoot() {
+    return this->rootCity;
+}
+
+Route ***Map::GetRoutes() {
+    return this->routes;
+}
+
+bool Map::AddCity(string name, float posX, float posY) {
+    City* newCity = new City(name, posX, posY);
 
     // Root case
     if (this->rootCity == nullptr) {

@@ -18,13 +18,17 @@ private:
     City* rootCity;
     Route*** routes;
 
-    int CityIndex(string cityName);
-    City* CityFromIndex(int cityIndex);
-
 public:
     explicit Map();
 
-    bool AddCity(string name);
+    City* GetRoot();
+    Route*** GetRoutes();
+
+    int CityIndex(string cityName);
+
+    City* CityFromIndex(int cityIndex);
+
+    bool AddCity(string name, float posX, float posY);
 
     bool AddRoute(string from, string to, float distance, float time);
 

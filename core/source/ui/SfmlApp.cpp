@@ -3,6 +3,7 @@
 //
 
 #include "../../header/ui/SfmlApp.h"
+#include "../../header/Map.h"
 
 Vector2f SfmlApp::normalizeVector(Vector2f source) {
     float length = sqrt((source.x * source.x) + (source.y * source.y));
@@ -13,18 +14,18 @@ Vector2f SfmlApp::normalizeVector(Vector2f source) {
     return source;
 }
 
-RectangleShape SfmlApp::DrawLine(Vector2f from, Vector2f to, float thickness)
+RectangleShape SfmlApp::DrawLine(Vector2f from, Vector2f to, float thickness, Color color)
 {
     RectangleShape line;
-    line.setFillColor(Color::White);
+    line.setFillColor(color);
 
     Vector2f dir = (to - from);
-    float angle = atan2(dir.y, dir.x) * (180.0f / M_PI);
-    float distance = sqrt(pow(from.x - to.x, 2) + pow(from.y - to.y, 2));
+    float rot = atan2(dir.y, dir.x) * (180.0f / M_PI);
+    float dist = sqrt(pow(from.x - to.x, 2) + pow(from.y - to.y, 2));
 
     line.setPosition(from);
-    line.setSize(Vector2f(distance, thickness));
-    line.setRotation(angle);
+    line.setSize(Vector2f(dist, thickness));
+    line.setRotation(rot);
 
     return line;
 }
@@ -32,12 +33,22 @@ RectangleShape SfmlApp::DrawLine(Vector2f from, Vector2f to, float thickness)
 void SfmlApp::Run() {
     RenderWindow window(VideoMode(640, 480), "Waze of Thrones");
 
-    CircleShape shape;
-    shape.setFillColor(Color::Cyan);
+    // Define graph
+    Map* map = new Map();
+    map->AddCity("A", 100, 100);
+    map->AddCity("B", 200, 100);
+    map->AddCity("C", 150, 200);
+    map->AddCity("D", 220, 200);
+    map->AddCity("E", 150, 50);
+
+    map->AddRoute("A", "B", 10, 5);
+    map->AddRoute("B", "C", 2, 8);
+    map->AddRoute("C", "D", 2, 8);
+    map->AddRoute("E", "D", 2, 8);
 
     int x = 0;
     int y = 0;
-    int radius = 40;
+    int radius = 5;
 
     while (window.isOpen())
     {
@@ -61,15 +72,44 @@ void SfmlApp::Run() {
                 y = event.mouseMove.y;
             }
         }
-
-        shape.setPosition(x, y);
-        shape.setRadius(radius);
-
         window.clear(Color::Black);
-        window.draw(shape);
 
-        Vector2f center = Vector2f(40, 40);
-        window.draw(DrawLine(center, shape.getPosition(), 10.0f));
+        // Draw routes or arcs
+        for (int i = 0; i < CITY_CAPACITY; i++) {
+            City *from = map->CityFromIndex(i);
+
+            if (from == nullptr) {
+                continue;
+            }
+            for (int j = 0; j < CITY_CAPACITY; j++) {
+                if (map->GetRoutes()[i][j] == nullptr) {
+                    continue;
+                }
+
+                City *to = map->CityFromIndex(j);
+
+                if (to != nullptr) {
+                    Vector2f fromPos = Vector2f(from->GetPosX()  + radius, from->GetPosY()  + radius);
+                    Vector2f toPos = Vector2f(to->GetPosX() + radius, to->GetPosY() + radius);
+
+                    window.draw(DrawLine(fromPos, toPos, 3.0f, Color::White));
+                }
+            }
+        }
+
+        // Draw cities or nodes
+        City* currentCity = map->GetRoot();
+        while (currentCity != nullptr) {
+            CircleShape cityNode;
+            cityNode.setPosition(currentCity->GetPosX(), currentCity->GetPosY());
+            cityNode.setRadius(radius);
+            cityNode.setFillColor(Color::Cyan);
+
+            window.draw(cityNode);
+
+            currentCity = currentCity->GetNext();
+        }
+
         window.display();
     }
 

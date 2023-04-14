@@ -4,9 +4,11 @@
 
 #include "../header/City.h"
 
-City::City(string name) {
+City::City(string name, float posX, float posY) {
     this->name = name;
     this->next = nullptr;
+    this->posX = posX;
+    this->posY = posY;
 }
 
 string City::GetName() {
@@ -28,4 +30,18 @@ int City::GetIndex() {
 }
 void City::SetIndex(int value) {
     this->index = value;
+}
+
+float City::GetPosX() {
+    return this->posX;
+}
+void City::SetPosX(float value) {
+    this->posX = value;
+}
+
+float City::GetPosY() {
+    return this->posY;
+}
+void City::SetPosY(float value) {
+    this->posY = value;
 }

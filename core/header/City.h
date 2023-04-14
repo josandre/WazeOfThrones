@@ -15,8 +15,11 @@ private:
     City* next;
     int index;
 
+    float posX;
+    float posY;
+
 public:
-    explicit City(string name);
+    explicit City(string name, float posX, float posY);
 
     string GetName();
     void SetName(string value);
@@ -26,6 +29,12 @@ public:
 
     int GetIndex();
     void SetIndex(int value);
+
+    float GetPosX();
+    void SetPosX(float value);
+
+    float GetPosY();
+    void SetPosY(float value);
 };
 
 
