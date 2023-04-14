@@ -2,7 +2,7 @@
 // Created by tsegura on 4/13/2023.
 //
 
-#include "../header/SfmlApp.h"
+#include "../../header/ui/SfmlApp.h"
 
 Vector2f SfmlApp::normalizeVector(Vector2f source) {
     float length = sqrt((source.x * source.x) + (source.y * source.y));
