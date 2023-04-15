@@ -2,12 +2,18 @@
 #include "core/header/ui/SfmlApp.h"
 #include "core/header/Map.h"
 #include "core/header/Hash.h"
+#include "core/source/CityDao.cpp"
 
 using namespace std;
 
 void SfmlTest() {
     SfmlApp* app = new SfmlApp();
     app->Run();
+}
+
+void CitiDAOTest(){
+    CityDAO citiDao;
+    citiDao.printCities();
 }
 
 void GraphTest() {
@@ -37,8 +43,9 @@ void testHashing(){
 }
 
 int main() {
-    SfmlTest();
+   // SfmlTest();
     //GraphTest();
-    testHashing();
+  //  testHashing();
+    CitiDAOTest();
     return 0;
 }

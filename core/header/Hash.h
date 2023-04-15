@@ -16,7 +16,7 @@ class Hash {
 public:
     Hash();
     City *getCity(int, string);
-    static enum {MAX = 5};
+    enum {MAX = 5};
     int hashing(int);
     void addCity(int, City*);
 
