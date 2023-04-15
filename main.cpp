@@ -43,9 +43,9 @@ void testHashing(){
 }
 
 int main() {
-   // SfmlTest();
+    SfmlTest();
     //GraphTest();
   //  testHashing();
-    CitiDAOTest();
+    //CitiDAOTest();
     return 0;
 }
