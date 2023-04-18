@@ -29,6 +29,7 @@ void testHashing(){
     table->addCity(table->hashing(0), new City("Winterfell", 1, 1));
     table->addCity(table->hashing(1), new City("Poniente", 3, 3));
     City *city = table->getCity(table->hashing(0), "winterfell");
+
     if (city != nullptr) {
         cout << city->GetName();
     } else{

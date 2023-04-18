@@ -19,7 +19,6 @@ int Map::CityIndex(string cityName) {
         currentCity = currentCity->GetNext();
         index++;
     }
-
     return -1;
 }
 
