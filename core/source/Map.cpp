@@ -70,6 +70,7 @@ Route ***Map::GetRoutes() {
 
 bool Map::AddCity(string name, float posX, float posY, int index) {
     City* newCity = new City(name, posX, posY, index);
+    this->table->addCity(newCity->GetIndex(), newCity);
 
     // Root case
     if (this->rootCity == nullptr) {
