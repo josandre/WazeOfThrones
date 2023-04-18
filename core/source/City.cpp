@@ -4,7 +4,8 @@
 
 #include "../header/City.h"
 
-City::City(string name, float posX, float posY) {
+City::City(string name, float posX, float posY, int index) {
+    this->index = index;
     this->name = name;
     this->next = nullptr;
     this->posX = posX;

@@ -15,12 +15,12 @@ private:
 public:
     CityDAO(){
         // Agregar las ciudades y sus datos
-        map->AddCity("Bastion Kar",1.0, 2.0);
-        map->AddCity("Invernalia",1.0, 2.0);
-        map->AddCity("Torrhen",1.0, 2.0);
-        map->AddCity("Puerto Blanco",1.0, 2.0);
-        map->AddCity("Varamar",1.0, 2.0);
-        map->AddCity("Los Dedos",1.0, 2.0);
+        map->AddCity("Bastion Kar", 1.0, 2.0);
+        map->AddCity("Invernalia", 1.0, 2.0);
+        map->AddCity("Torrhen", 1.0, 2.0);
+        map->AddCity("Puerto Blanco", 1.0, 2.0);
+        map->AddCity("Varamar", 1.0, 2.0);
+        map->AddCity("Los Dedos", 1.0, 2.0);
         map->AddCity("Nido de Águilas",1.0, 2.0);
         map->AddCity("El Valle",1.0, 2.0);
         map->AddCity("Aguas Dulces",1.0, 2.0);

@@ -5,6 +5,7 @@
 #include "../header/Map.h"
 
 int Map::CityIndex(string cityName) {
+
     if (this->rootCity == nullptr) {
         return -1;
     }
@@ -19,7 +20,6 @@ int Map::CityIndex(string cityName) {
         currentCity = currentCity->GetNext();
         index++;
     }
-
     return -1;
 }
 
@@ -43,6 +43,8 @@ City *Map::CityFromIndex(int cityIndex) {
 }
 
 Map::Map() {
+    this->table = new Hash();
+
     this->lastCityIndex = 0;
     this->cityCount = 0;
     this->rootCity = nullptr;
@@ -66,8 +68,8 @@ Route ***Map::GetRoutes() {
     return this->routes;
 }
 
-bool Map::AddCity(string name, float posX, float posY) {
-    City* newCity = new City(name, posX, posY);
+bool Map::AddCity(string name, float posX, float posY, int index) {
+    City* newCity = new City(name, posX, posY, index);
 
     // Root case
     if (this->rootCity == nullptr) {

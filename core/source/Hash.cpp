@@ -6,6 +6,8 @@
 
 
 Hash::Hash() {
+
+
     for (int i = 0; i < MAX; i++){
         this->city [i] = nullptr;
     }
@@ -27,21 +29,17 @@ void Hash::addCity(int index, City *city) {
 bool Hash::equalSIgnoreCase(std::string str1, std::string str2) {
     std::transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
     std::transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
-
     return (str1 == str2);
 }
 
 
-City *Hash::getCity(int index, string name) {
-    City *aux = this->city[index];
-
-    while (aux != nullptr ){
+City *Hash::getCity(string name) {
+    for(int i = 0; i < this->MAX; i++){
+        City *aux = this->city[i];
         if(equalSIgnoreCase(aux->GetName(), name)){
             return aux;
         }
-        aux = aux->GetNext();
     }
-
     return nullptr;
 }
 
