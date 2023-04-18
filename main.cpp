@@ -13,6 +13,7 @@ void SfmlTest() {
 
 void CitiDAOTest(){
     CityDAO citiDao;
+    Map* map = citiDao.GetMap();
 }
 
 void GraphTest() {

@@ -9,7 +9,6 @@
 
 class CityDAO{
 private:
-  //  vector<City> cities;
     Map* map = new Map();
 
 public:
@@ -46,25 +45,8 @@ public:
         map->AddCity("Yalth",1.0, 2.0, 29);
     }
 
-    /*
-    // Obtener ciudades por índice
-    City* getCitiesByIndex(int index){
-        if(index < 0 || index >= cities.size()){
-            return nullptr;
-        }
-        return &cities[index];
+    Map* GetMap() {
+        return map;
     }
 
-    void printCities(){
-
-        for (int i = 0; i < cities.size(); i++) {
-
-            City city = cities[i];
-            cout << "City " << i << ": " << city.GetName() << endl;
-
-           // City* city = getCitiesByIndex(i);
-           // cout << "City " << i << ": " << city->GetName() << endl;
-        }
-    }
-     */
 };
