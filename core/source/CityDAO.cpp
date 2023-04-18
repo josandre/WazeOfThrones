@@ -46,6 +46,7 @@ public:
         map->AddCity("Yalth",1.0, 2.0);
     }
 
+    /*
     // Obtener ciudades por índice
     City* getCitiesByIndex(int index){
         if(index < 0 || index >= cities.size()){
@@ -65,4 +66,5 @@ public:
            // cout << "City " << i << ": " << city->GetName() << endl;
         }
     }
+     */
 };
