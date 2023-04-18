@@ -15,6 +15,7 @@ private:
     float distance;
     float time;
 
+
 public:
     explicit Route(string name, float distance, float time);
 
