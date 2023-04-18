@@ -19,7 +19,7 @@ private:
     float posY;
 
 public:
-    explicit City(string name, float posX, float posY);
+    explicit City(string name, float posX, float posY, int index);
 
     string GetName();
     void SetName(string value);

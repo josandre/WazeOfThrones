@@ -6,6 +6,8 @@
 
 
 Hash::Hash() {
+
+
     for (int i = 0; i < MAX; i++){
         this->city [i] = nullptr;
     }

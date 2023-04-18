@@ -10,6 +10,8 @@
 #include "City.h"
 #include "Route.h"
 #include "iostream"
+#include "Hash.h"
+
 
 class Map {
 private:
@@ -17,6 +19,7 @@ private:
     int cityCount;
     City* rootCity;
     Route*** routes;
+    Hash *table;
 
 public:
     explicit Map();
@@ -28,7 +31,7 @@ public:
 
     City* CityFromIndex(int cityIndex);
 
-    bool AddCity(string name, float posX, float posY);
+    bool AddCity(string name, float posX, float posY, int index);
 
     bool AddRoute(string from, string to, float distance, float time);
 
