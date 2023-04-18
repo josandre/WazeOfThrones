@@ -10,10 +10,10 @@
 class CityDAO{
 private:
     vector<City> cities;
+    Map* map = new Map();
 
 public:
     CityDAO(){
-        Map* map = new Map();
         // Agregar las ciudades y sus datos
         map->AddCity("Bastion Kar",1.0, 2.0);
         map->AddCity("Invernalia",1.0, 2.0);
@@ -55,6 +55,7 @@ public:
     }
 
     void printCities(){
+
         for (int i = 0; i < cities.size(); i++) {
 
             City city = cities[i];
