@@ -8,12 +8,12 @@
 
 SfmlApp::SfmlApp() {
     this->checkAdjacentCitiesUI = new CheckAdjacentCities();
+    this->searchCity = new SearchCity();
     this->map = InitMap();
-
+    this->city = {""};
     this->outputText = {""};
     this->fromCity = {""};
     this->toCity = {""};
-
     this->menuOption = -1;
     this->selectedCity = -1;
 }
@@ -91,6 +91,7 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta) {
             checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity);
             break;
         case 1:
+            searchCity->ShowUI(&city);
             break;
         case 2:
             break;

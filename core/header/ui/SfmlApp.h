@@ -17,6 +17,7 @@
 #include <misc/cpp/imgui_stdlib.h>
 #include "../Map.h"
 #include "CheckAdjacentCities.h"
+#include "SearchCity.h"
 
 using namespace sf;
 using namespace std;
@@ -24,8 +25,9 @@ using namespace std;
 class SfmlApp {
 private:
     CheckAdjacentCities* checkAdjacentCitiesUI;
+    SearchCity* searchCity;
     Map* map;
-
+    string city;
     string outputText;
     string fromCity;
     string toCity;
