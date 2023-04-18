@@ -72,8 +72,9 @@ void SfmlApp::Run() {
 
     ImGui::SFML::Init(window);
 
-    // Define graph
     Map* map = new Map();
+    // Define graph
+    /*
     map->AddCity("BASTION KAR", 1200, 180);
     map->AddCity("INVERNALIA", 910, 270);
     map->AddCity("TORRHEN", 660, 440);
@@ -89,6 +90,8 @@ void SfmlApp::Run() {
     map->AddRoute("PUERTO BLANCO", "VARAMAR", 2, 8);
 
     map->AddRoute("TORRHEN", "VARAMAR", 2, 8);
+
+     */
 
     while (window.isOpen())
     {

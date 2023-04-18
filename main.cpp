@@ -32,9 +32,10 @@ void GraphTest() {
 
 
 int main() {
+    CitiDAOTest();
     SfmlTest();
     //GraphTest();
 
-    //CitiDAOTest();
+
     return 0;
 }
