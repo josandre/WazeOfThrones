@@ -9,6 +9,9 @@
 SfmlApp::SfmlApp() {
     this->checkAdjacentCitiesUI = new CheckAdjacentCities();
     this->searchCity = new SearchCity();
+    this->shortestRoute = new ShortestRoute();
+    this->longestRoute = new LongestRoute();
+
     this->map = InitMap();
     this->city = {""};
     this->outputText = {""};
@@ -29,12 +32,15 @@ void SfmlApp::CheckForCityClick(Vector2f mousePosition) {
     // Find if the user just clicked a city
     City* currentCity = map->GetRoot();
     while (currentCity != nullptr) {
-        float dist = sqrt(pow(mousePosition.x - currentCity->GetPosX(), 2) + pow(mousePosition.y - currentCity->GetPosY(), 2));
-
-        cout << "DISTANCE FROM " << currentCity->GetName() << ": " << dist << endl;
+        float dist = sqrt(pow(mousePosition.x - (currentCity->GetPosX() + NODES_RADIUS), 2) + pow(mousePosition.y - (currentCity->GetPosY() + NODES_RADIUS), 2));
 
         if (dist <= 8.0f) {
-            fromCity = currentCity->GetName();
+            if (selectCityOption == 0) {
+                fromCity = currentCity->GetName();
+            } else {
+                toCity = currentCity->GetName();
+            }
+
         }
 
         currentCity = currentCity->GetNext();
@@ -71,29 +77,50 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta, View view) {
     // Draw UI
     ImGui::SFML::Update(window, delta);
     ImGui::Begin("Menu Principal");
+
+    bool reset = false;
+
     if (ImGui::Button("Ver ciudades adyascentes", ImVec2(200, 32))) {
+        reset = true;
         menuOption = 0;
     }
     if (ImGui::Button("Buscar", ImVec2(200, 32))) {
+        reset = true;
         menuOption = 1;
     }
     if (ImGui::Button("Ruta más corta", ImVec2(200, 32))) {
+        reset = true;
         menuOption = 2;
     }
     if (ImGui::Button("Ruta más larga", ImVec2(200, 32))) {
+        reset = true;
         menuOption = 3;
     }
 
     ImGui::End();
 
+    if (reset == true) {
+        selectCityOption = false;
+        fromCity = "";
+        toCity = "";
+
+        checkAdjacentCitiesUI->Clear();
+        shortestRoute->Clear();
+        longestRoute->Clear();
+    }
+
     switch (menuOption) {
         case 0:
-            checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity);
+            checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity, &selectCityOption);
             break;
         case 1:
             searchCity->ShowUI(&city, this->map, window, view);
             break;
         case 2:
+            shortestRoute->ShowUI(&fromCity, &toCity, &selectCityOption);
+            break;
+        case 3:
+            longestRoute->ShowUI(&fromCity, &toCity, &selectCityOption);
             break;
     }
 }
@@ -107,9 +134,6 @@ void SfmlApp::Run() {
     Color backgroundColor = Color(200, 233, 240, 255);
     Color nodesColor = Color(177, 172, 154, 255);
     Color routesColor = Color(145, 145, 145, 255);
-
-    float nodesRadius = 8.0f;
-    float routesThickness = 4.0f;
 
     // Background variables
     Texture backgroundTexture;
@@ -161,7 +185,10 @@ void SfmlApp::Run() {
                         clickPosition = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y));
                     }
 
-                    CheckForCityClick(clickPosition);
+                    if (event.mouseButton.button == 0) {
+                        Vector2f mousePos = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y));
+                        CheckForCityClick(mousePos);
+                    }
                     break;
 
                 case Event::MouseButtonReleased:
@@ -228,10 +255,10 @@ void SfmlApp::Run() {
                 City *to = map->CityFromIndex(j);
 
                 if (to != nullptr) {
-                    Vector2f fromPos = Vector2f(from->GetPosX() + nodesRadius, from->GetPosY() + nodesRadius);
-                    Vector2f toPos = Vector2f(to->GetPosX() + nodesRadius, to->GetPosY() + nodesRadius);
+                    Vector2f fromPos = Vector2f(from->GetPosX() + NODES_RADIUS, from->GetPosY() + NODES_RADIUS);
+                    Vector2f toPos = Vector2f(to->GetPosX() + NODES_RADIUS, to->GetPosY() + NODES_RADIUS);
 
-                    window.draw(DrawLine(fromPos, toPos, routesThickness, routesColor));
+                    window.draw(DrawLine(fromPos, toPos, ROUTES_THICKNESS, routesColor));
                 }
             }
         }
@@ -241,7 +268,7 @@ void SfmlApp::Run() {
         while (currentCity != nullptr) {
             CircleShape cityNode;
             cityNode.setPosition(currentCity->GetPosX(), currentCity->GetPosY());
-            cityNode.setRadius(nodesRadius);
+            cityNode.setRadius(NODES_RADIUS);
             cityNode.setFillColor(nodesColor);
 
             window.draw(cityNode);

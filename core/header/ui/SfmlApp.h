@@ -18,6 +18,11 @@
 #include "../Map.h"
 #include "CheckAdjacentCities.h"
 #include "SearchCity.h"
+#include "ShortestRoute.h"
+#include "LongestRoute.h"
+
+#define NODES_RADIUS 8.0f
+#define ROUTES_THICKNESS 4.0f
 
 using namespace sf;
 using namespace std;
@@ -26,6 +31,9 @@ class SfmlApp {
 private:
     CheckAdjacentCities* checkAdjacentCitiesUI;
     SearchCity* searchCity;
+    ShortestRoute* shortestRoute;
+    LongestRoute* longestRoute;
+
     Map* map;
     string city;
     string outputText;
@@ -33,6 +41,7 @@ private:
     string toCity;
     int menuOption;
 
+    int selectCityOption;
     int selectedCity;
     vector<int> adjacentCities;
     vector<int> pathRoutes;
