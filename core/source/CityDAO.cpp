@@ -9,7 +9,7 @@
 
 class CityDAO{
 private:
-    vector<City> cities;
+  //  vector<City> cities;
     Map* map = new Map();
 
 public:
