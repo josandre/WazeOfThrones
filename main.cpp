@@ -13,14 +13,14 @@ void SfmlTest() {
 
 void CitiDAOTest(){
     CityDAO citiDao;
-    citiDao.printCities();
+    Map* map = citiDao.GetMap();
 }
 
 void GraphTest() {
     Map* map = new Map();
-    map->AddCity("A", 0, 0);
-    map->AddCity("B", 0, 0);
-    map->AddCity("C", 0, 0);
+    map->AddCity("A", 0, 0, 1);
+    map->AddCity("B", 0, 0, 1);
+    map->AddCity("C", 0, 0, 1);
 
     map->AddRoute("A", "B", 10, 5);
     map->AddRoute("A", "C", 1, 3);
