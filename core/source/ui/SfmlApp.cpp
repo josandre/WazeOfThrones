@@ -4,6 +4,40 @@
 
 #include "../../header/ui/SfmlApp.h"
 #include "../../header/Map.h"
+#include "../MapDAO.h"
+
+SfmlApp::SfmlApp() {
+    cout << "HERE" << endl;
+    this->map = InitMap();
+
+    this->outputText = {""};
+    this->fromCity = {""};
+    this->toCity = {""};
+
+    this->menuOption = -1;
+    this->selectedCity = -1;
+}
+
+Map *SfmlApp::InitMap() {
+    MapDAO citiDao;
+    Map* map = citiDao.InitMap();
+
+    return map;
+}
+
+void SfmlApp::CheckForCityClick(Vector2f mousePosition) {
+    // Find if the user just clicked a city
+    City* currentCity = map->GetRoot();
+    while (currentCity != nullptr) {
+        float dist = sqrt(pow(mousePosition.x - currentCity->GetPosX(), 2) + pow(mousePosition.y - currentCity->GetPosY(), 2));
+        if (dist <= 8.0f) {
+            fromCity = currentCity->GetName();
+        }
+
+        currentCity = currentCity->GetNext();
+    }
+
+}
 
 Vector2f SfmlApp::normalizeVector(Vector2f source) {
     float length = sqrt((source.x * source.x) + (source.y * source.y));
@@ -28,6 +62,50 @@ RectangleShape SfmlApp::DrawLine(Vector2f from, Vector2f to, float thickness, Co
     line.setRotation(rot);
 
     return line;
+}
+
+void SfmlApp::DrawUI(RenderWindow &window, Time delta) {
+    // Draw UI
+    ImGui::SFML::Update(window, delta);
+    ImGui::Begin("Menu Principal");
+    if (ImGui::Button("Ver ciudades adyascentes", ImVec2(200, 32))) {
+        menuOption = 0;
+    }
+    if (ImGui::Button("Buscar", ImVec2(200, 32))) {
+        menuOption = 1;
+    }
+    if (ImGui::Button("Ruta más corta", ImVec2(200, 32))) {
+        menuOption = 2;
+    }
+    if (ImGui::Button("Ruta más larga", ImVec2(200, 32))) {
+        menuOption = 3;
+    }
+
+    ImGui::End();
+
+    switch (menuOption) {
+        case 0:
+            ImGui::Begin("Ver ciudades adyascentes");
+            ImGui::BeginGroup();
+
+            ImGui::InputText("From", &fromCity, 100);
+            ImGui::InputText("To", &toCity, 100);
+
+            if (ImGui::Button("Print", ImVec2(100, 40))) {
+                Print(fromCity);
+            }
+            if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
+                outputText = "";
+            }
+
+            ImGui::EndGroup();
+            ImGui::End();
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+    }
 }
 
 void SfmlApp::Print(string msj) {
@@ -72,27 +150,6 @@ void SfmlApp::Run() {
 
     ImGui::SFML::Init(window);
 
-    Map* map = new Map();
-    // Define graph
-    /*
-    map->AddCity("BASTION KAR", 1200, 180);
-    map->AddCity("INVERNALIA", 910, 270);
-    map->AddCity("TORRHEN", 660, 440);
-    map->AddCity("PUERTO BLANCO", 970, 520);
-    map->AddCity("VARAMAR", 900, 830);
-
-    map->AddRoute("BASTION KAR", "INVERNALIA", 10, 5);
-    map->AddRoute("BASTION KAR", "PUERTO BLANCO", 2, 8);
-
-    map->AddRoute("INVERNALIA", "PUERTO BLANCO", 2, 8);
-    map->AddRoute("INVERNALIA", "TORRHEN", 2, 8);
-
-    map->AddRoute("PUERTO BLANCO", "VARAMAR", 2, 8);
-
-    map->AddRoute("TORRHEN", "VARAMAR", 2, 8);
-
-     */
-
     while (window.isOpen())
     {
         Event event;
@@ -113,6 +170,8 @@ void SfmlApp::Run() {
                         moving = true;
                         clickPosition = window.mapPixelToCoords(Vector2i(event.mouseButton.x, event.mouseButton.y));
                     }
+
+                    CheckForCityClick(clickPosition);
                     break;
 
                 case Event::MouseButtonReleased:
@@ -158,25 +217,7 @@ void SfmlApp::Run() {
             }
         }
 
-        // Draw UI
-        ImGui::SFML::Update(window, deltaClock.restart());
-        ImGui::Begin("Output");
-        ImGui::Text(outputText.c_str());
-        ImGui::End();
-
-        ImGui::Begin("Controls");
-        ImGui::BeginGroup();
-        ImGui::InputText("Input", &inputText1, 100);
-
-        if (ImGui::Button("Print", ImVec2(100, 40))) {
-            Print(inputText1);
-        }
-        if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
-            outputText = "";
-        }
-
-        ImGui::EndGroup();
-        ImGui::End();
+        DrawUI(window, deltaClock.restart());
 
         window.clear(backgroundColor);
         window.draw(background);
@@ -189,10 +230,10 @@ void SfmlApp::Run() {
                 continue;
             }
             for (int j = 0; j < CITY_CAPACITY; j++) {
+
                 if (map->GetRoutes()[i][j] == nullptr) {
                     continue;
                 }
-
                 City *to = map->CityFromIndex(j);
 
                 if (to != nullptr) {

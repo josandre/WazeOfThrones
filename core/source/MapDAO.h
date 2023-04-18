@@ -1,25 +1,23 @@
 //
-// Created by rocha on 15/4/2023.
+// Created by tsegura on 4/17/2023.
 //
 
-#include <vector>
-#include <iostream>
-#include "../header/City.h"
+#ifndef WAZEOFTHRONES_MAPDAO_H
+#define WAZEOFTHRONES_MAPDAO_H
+
+
 #include "../header/Map.h"
 
-class CityDAO{
-private:
-    Map* map = new Map();
-
+class MapDAO {
 public:
-    CityDAO(){
-        // Agregar las ciudades y sus datos
-        map->AddCity("Bastion Kar", 1.0, 2.0, 0);
-        map->AddCity("Invernalia", 1.0, 2.0, 1);
-        map->AddCity("Torrhen", 1.0, 2.0, 2);
-        map->AddCity("Puerto Blanco", 1.0, 2.0, 3);
-        map->AddCity("Varamar", 1.0, 2.0, 4);
-        map->AddCity("Los Dedos", 1.0, 2.0, 5);
+    Map* InitMap() {
+        Map* map = new Map();
+        map->AddCity("BASTION KAR", 1200.0, 180.0, 0);
+        map->AddCity("INVERNALIA", 910.0, 270.0, 1);
+        map->AddCity("TORRHEN", 660.0, 440.0, 2);
+        map->AddCity("PUERTO BLANCO", 970.0, 520.0, 3);
+        map->AddCity("VARAMAR", 900.0, 830.0, 4);
+        map->AddCity("LOS DEDOS", 1.0, 2.0, 5);
         map->AddCity("Nido de Águilas",1.0, 2.0, 6);
         map->AddCity("El Valle",1.0, 2.0, 7);
         map->AddCity("Aguas Dulces",1.0, 2.0, 8);
@@ -43,10 +41,19 @@ public:
         map->AddCity("Campo Estrella",1.0, 2.0, 26);
         map->AddCity("Lanza del Sol",1.0, 2.0, 27);
         map->AddCity("Yalth",1.0, 2.0, 28);
-    }
 
-    Map* GetMap() {
+        map->AddRoute("BASTION KAR", "INVERNALIA", 10, 5);
+        map->AddRoute("BASTION KAR", "PUERTO BLANCO", 2, 8);
+
+        map->AddRoute("INVERNALIA", "PUERTO BLANCO", 2, 8);
+        map->AddRoute("INVERNALIA", "TORRHEN", 2, 8);
+
+        map->AddRoute("PUERTO BLANCO", "VARAMAR", 2, 8);
+
+        map->AddRoute("TORRHEN", "VARAMAR", 2, 8);
         return map;
     }
-
 };
+
+
+#endif //WAZEOFTHRONES_MAPDAO_H

@@ -2,7 +2,7 @@
 #include "core/header/ui/SfmlApp.h"
 #include "core/header/Map.h"
 #include "core/header/Hash.h"
-#include "core/source/CityDao.cpp"
+#include "core/source/MapDAO.h"
 
 using namespace std;
 
@@ -12,8 +12,8 @@ void SfmlTest() {
 }
 
 void CitiDAOTest(){
-    CityDAO citiDao;
-    Map* map = citiDao.GetMap();
+    MapDAO citiDao;
+    Map* map = citiDao.InitMap();
 }
 
 void GraphTest() {
@@ -33,9 +33,9 @@ void GraphTest() {
 
 int main() {
     CitiDAOTest();
+
     SfmlTest();
     //GraphTest();
-
 
     return 0;
 }

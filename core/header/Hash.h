@@ -16,11 +16,9 @@ class Hash {
 public:
     Hash();
     City *getCity(string);
-    enum {MAX = 28};
+    enum {MAX = 29};
     int hashing(int);
     void addCity(int, City*);
-
-
 
 private:
     City *city[MAX];
