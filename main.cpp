@@ -1,7 +1,6 @@
 #include <iostream>
 #include "core/header/ui/SfmlApp.h"
 #include "core/header/Map.h"
-#include "core/header/Hash.h"
 #include "core/source/CityDao.cpp"
 
 using namespace std;
@@ -29,13 +28,11 @@ void GraphTest() {
     map->Print();
 }
 
-
-
 int main() {
+    cout << "1" << endl;
     CitiDAOTest();
+    cout << "2" << endl;
     SfmlTest();
     //GraphTest();
-
-
     return 0;
 }

@@ -20,8 +20,6 @@ public:
     int hashing(int);
     void addCity(int, City*);
 
-
-
 private:
     City *city[MAX];
     bool equalSIgnoreCase(string, string);

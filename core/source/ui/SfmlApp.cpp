@@ -168,9 +168,11 @@ void SfmlApp::Run() {
         ImGui::BeginGroup();
         ImGui::InputText("Input", &inputText1, 100);
 
+
         if (ImGui::Button("Print", ImVec2(100, 40))) {
             Print(inputText1);
         }
+
         if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
             outputText = "";
         }
