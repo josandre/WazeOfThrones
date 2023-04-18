@@ -16,12 +16,14 @@
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 #include "../Map.h"
+#include "CheckAdjacentCities.h"
 
 using namespace sf;
 using namespace std;
 
 class SfmlApp {
 private:
+    CheckAdjacentCities* checkAdjacentCitiesUI;
     Map* map;
 
     string outputText;

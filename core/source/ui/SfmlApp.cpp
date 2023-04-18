@@ -7,7 +7,7 @@
 #include "../MapDAO.h"
 
 SfmlApp::SfmlApp() {
-    cout << "HERE" << endl;
+    this->checkAdjacentCitiesUI = new CheckAdjacentCities();
     this->map = InitMap();
 
     this->outputText = {""};
@@ -30,6 +30,9 @@ void SfmlApp::CheckForCityClick(Vector2f mousePosition) {
     City* currentCity = map->GetRoot();
     while (currentCity != nullptr) {
         float dist = sqrt(pow(mousePosition.x - currentCity->GetPosX(), 2) + pow(mousePosition.y - currentCity->GetPosY(), 2));
+
+        cout << "DISTANCE FROM " << currentCity->GetName() << ": " << dist << endl;
+
         if (dist <= 8.0f) {
             fromCity = currentCity->GetName();
         }
@@ -85,21 +88,7 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta) {
 
     switch (menuOption) {
         case 0:
-            ImGui::Begin("Ver ciudades adyascentes");
-            ImGui::BeginGroup();
-
-            ImGui::InputText("From", &fromCity, 100);
-            ImGui::InputText("To", &toCity, 100);
-
-            if (ImGui::Button("Print", ImVec2(100, 40))) {
-                Print(fromCity);
-            }
-            if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
-                outputText = "";
-            }
-
-            ImGui::EndGroup();
-            ImGui::End();
+            checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity);
             break;
         case 1:
             break;
