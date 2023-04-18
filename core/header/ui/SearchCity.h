@@ -25,14 +25,23 @@ using namespace std;
 class SearchCity {
 
 public:
-    void ShowUI(string* city) {
+    void ShowUI(string* city, Map *map, RenderWindow &window, View &view ) {
         ImGui::Begin("Ver ciudades adyascentes");
         ImGui::BeginGroup();
 
         ImGui::InputText("City", city, 100);
 
         if (ImGui::Button("Search", ImVec2(100, 40))) {
-            //Print(fromCity);
+            map->getTable();
+            City *cityFound = map->getTable()->getCity(*city);
+
+            if(cityFound != nullptr){
+                view.setCenter(Vector2f(cityFound->GetPosX(), cityFound->GetPosY()));
+                view.setSize(window.getDefaultView().getSize());    // Reset size
+                view.zoom(0.6);
+                window.setView(view);
+
+            }
         }
         if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
             //outputText = "";

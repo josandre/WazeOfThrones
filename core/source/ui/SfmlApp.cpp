@@ -67,7 +67,7 @@ RectangleShape SfmlApp::DrawLine(Vector2f from, Vector2f to, float thickness, Co
     return line;
 }
 
-void SfmlApp::DrawUI(RenderWindow &window, Time delta) {
+void SfmlApp::DrawUI(RenderWindow &window, Time delta, View view) {
     // Draw UI
     ImGui::SFML::Update(window, delta);
     ImGui::Begin("Menu Principal");
@@ -91,7 +91,7 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta) {
             checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity);
             break;
         case 1:
-            searchCity->ShowUI(&city);
+            searchCity->ShowUI(&city, this->map, window, view);
             break;
         case 2:
             break;
@@ -207,7 +207,7 @@ void SfmlApp::Run() {
             }
         }
 
-        DrawUI(window, deltaClock.restart());
+        DrawUI(window, deltaClock.restart(), view);
 
         window.clear(backgroundColor);
         window.draw(background);

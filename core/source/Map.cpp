@@ -129,3 +129,7 @@ void Map::Print() {
         std::cout << std::endl;
     }
 }
+
+Hash *Map::getTable() {
+    return this->table;
+}

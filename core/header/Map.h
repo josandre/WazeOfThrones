@@ -35,6 +35,8 @@ public:
 
     bool AddRoute(string from, string to, float distance, float time);
 
+    Hash *getTable();
+
     void Print();
 };
 

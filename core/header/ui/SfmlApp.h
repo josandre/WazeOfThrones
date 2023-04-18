@@ -45,7 +45,7 @@ public:
     void CheckForCityClick(Vector2f mousePosition);
     Vector2f normalizeVector(Vector2f source);
     RectangleShape DrawLine(Vector2f from, Vector2f to, float thickness, Color color);
-    void DrawUI(RenderWindow& window, Time delta);
+    void DrawUI(RenderWindow& window, Time delta, View view);
     void Print(string msj);
     void Run();
 };
