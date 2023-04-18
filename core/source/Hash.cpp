@@ -31,16 +31,13 @@ bool Hash::equalSIgnoreCase(std::string str1, std::string str2) {
 }
 
 
-City *Hash::getCity(int index, string name) {
-    City *aux = this->city[0];
-
-    while (aux != nullptr ){
+City *Hash::getCity(string name) {
+    for(int i = 0; i < this->MAX; i++){
+        City *aux = this->city[i];
         if(equalSIgnoreCase(aux->GetName(), name)){
             return aux;
         }
-        aux = aux->GetNext();
     }
-
     return nullptr;
 }
 

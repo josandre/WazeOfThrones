@@ -15,8 +15,8 @@ using namespace std;
 class Hash {
 public:
     Hash();
-    City *getCity(int, string);
-    enum {MAX = 5};
+    City *getCity(string);
+    enum {MAX = 28};
     int hashing(int);
     void addCity(int, City*);
 
