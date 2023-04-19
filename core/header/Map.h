@@ -24,6 +24,14 @@ private:
 public:
     explicit Map();
 
+    int miniDist(int [] , bool[]);
+
+    string DijkstraAlgo(Map, int, int);
+
+    int getCityCount();
+
+    void printMatrix();
+
     City* GetRoot();
     Route*** GetRoutes();
 

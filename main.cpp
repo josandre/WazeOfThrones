@@ -12,10 +12,9 @@ void SfmlTest() {
     app->Run();
 }
 
-void CitiDAOTest(){
-    MapDAO citiDao;
-    Map* map = citiDao.InitMap();
-}
+
+
+
 
 void GraphTest() {
     Map* map = new Map();
@@ -27,15 +26,26 @@ void GraphTest() {
     map->AddRoute("A", "C", 1, 3);
     map->AddRoute("B", "C", 2, 8);
 
-    map->Print();
+}
+
+
+
+void CitiDAOTest(){
+    MapDAO citiDao;
+    Map* map = citiDao.InitMap();
+    cout << map->DijkstraAlgo(*map, 0, 1) << endl;
+
+    //map->printMatrix();
+
 }
 
 
 
 int main() {
+
     CitiDAOTest();
 
-    SfmlTest();
+    //SfmlTest();
     //GraphTest();
 
     return 0;

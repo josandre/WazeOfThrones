@@ -42,6 +42,24 @@ City *Map::CityFromIndex(int cityIndex) {
     return currentCity;
 }
 
+
+void Map::printMatrix() {
+    for(int i = 0; i < 29; i++){
+        cout << CityFromIndex(i)->GetName() << " : ";
+        for(int j = 0; j < 29; j++ ){
+            auto test = GetRoutes()[i][j];
+
+            if(test != nullptr) {
+                cout << test->GetDistance() << " ";
+            }else{
+                cout << "0" << " ";
+            }
+        }
+
+        cout << "\n";
+    }
+}
+
 Map::Map() {
     this->table = new Hash();
 
@@ -59,6 +77,59 @@ Map::Map() {
         }
     }
 }
+
+int Map::miniDist(int distance[], bool Tset[]) {
+    int minimum = INT_MAX, ind;
+
+    for(int k= 0; k < 6; k++)
+    {
+        if(Tset[k] == false && distance[k] <= minimum)
+        {
+            minimum=distance[k];
+            ind = k;
+        }
+    }
+    return ind;
+}
+
+string Map::DijkstraAlgo(Map map, int src, int to)
+{
+    int distance[29];
+    bool Tset[29];
+
+
+    for(int k = 0; k < 29; k++)
+    {
+        distance[k] = INT_MAX;
+        Tset[k] = false;
+    }
+
+    distance[src] = 0;
+
+    for(int k = 0; k < 29; k++)
+    {
+        int m = miniDist(distance,Tset);
+        Tset[m] = true;
+
+        for(int k = 0; k < 29; k++)
+        {
+
+            if(!Tset[k] && map.GetRoutes()[m][k] && distance[m] != INT_MAX && distance[m] + map.GetRoutes()[m][k]->GetDistance() < distance[k])
+                distance[k] = distance[m] + map.GetRoutes()[m][k]->GetDistance();
+        }
+    }
+
+
+
+   /* cout<<"Vertex\t\tDistance from source vertex"<<endl;
+    cout << map.CityFromIndex(src)->GetName() << "\t\t\t" << distance[to] << "\t\t\t"
+         << map.CityFromIndex(to)->GetName() << endl;
+         */
+
+
+    return map.CityFromIndex(src)->GetName() + "\t\t\t" + to_string(distance[to]) + "\t\t\t" + map.CityFromIndex(to)->GetName();
+}
+
 
 City* Map::GetRoot() {
     return this->rootCity;
@@ -93,8 +164,8 @@ bool Map::AddCity(string name, float posX, float posY, int index) {
 }
 
 bool Map::AddRoute(string from, string to, float distance, float time) {
-    int fromIndex = CityIndex(from);
     int toIndex = CityIndex(to);
+    int fromIndex = CityIndex(from);
 
     // Make sure the nodes exist in the graph
     if (fromIndex == -1 || toIndex == -1) {
@@ -132,4 +203,8 @@ void Map::Print() {
 
 Hash *Map::getTable() {
     return this->table;
+}
+
+int Map::getCityCount() {
+    this->cityCount;
 }
