@@ -6,7 +6,7 @@
 #define WAZEOFTHRONES_MAPDAO_H
 
 
-#include "../header/Map.h"
+#include "Map.h"
 
 class MapDAO {
 public:

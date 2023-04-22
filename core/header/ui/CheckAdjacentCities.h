@@ -16,6 +16,7 @@
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 #include "../Map.h"
+#include "../../AppVariables.h"
 
 using namespace sf;
 using namespace std;
@@ -29,7 +30,7 @@ public:
         current_item = items[0];
     }
 
-    void ShowUI(string* fromCity, string* toCity, int* selectCityOption) {
+    void ShowUI(AppVariables* appVariables) {
         ImGui::Begin("Ver ciudades adyascentes");
         ImGui::BeginGroup();
 
@@ -41,7 +42,7 @@ public:
                 bool is_selected = (current_item == items[n]); // You can store your selection however you want, outside or inside your objects
                 if (ImGui::Selectable(items[n], current_item, is_selected)) {
                     current_item = items[n];
-                    *selectCityOption = n;
+                    appVariables->SetSelectCityOption(n);
                 }
 
                 if (is_selected) {
@@ -52,8 +53,8 @@ public:
         }
 
         // Text fields
-        ImGui::InputText("Origen", fromCity, 100);
-        ImGui::InputText("Destino", toCity, 100);
+        ImGui::InputText("Origen", appVariables->GetFromCity(), 100);
+        ImGui::InputText("Destino", appVariables->GetToCity(), 100);
 
         if (ImGui::Button("Mostrar Ruta", ImVec2(100, 40))) {
             //Print(fromCity);

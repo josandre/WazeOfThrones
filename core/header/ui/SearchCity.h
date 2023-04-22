@@ -16,35 +16,28 @@
 #include <misc/cpp/imgui_stdlib.h>
 #include "../Map.h"
 #include "CheckAdjacentCities.h"
+#include "../../AppVariables.h"
 
 using namespace sf;
 using namespace std;
 
-
-
 class SearchCity {
 
 public:
-    void ShowUI(string* city, Map *map, RenderWindow &window, View &view ) {
-        ImGui::Begin("Ver ciudades adyascentes");
+    void ShowUI(AppVariables* appVariables, RenderWindow &window, View &view ) {
+        ImGui::Begin("Buscar Ciudad");
         ImGui::BeginGroup();
 
-        ImGui::InputText("City", city, 100);
+        ImGui::InputText("Ciudad", appVariables->GetCity(), 100);
 
-        if (ImGui::Button("Search", ImVec2(100, 40))) {
-            map->getTable();
-            City *cityFound = map->getTable()->getCity(*city);
+        if (ImGui::Button("Buscar", ImVec2(100, 40))) {
+            appVariables->GetMap()->getTable();
+            City *cityFound = appVariables->GetMap()->getTable()->getCity(*appVariables->GetCity());
 
             if(cityFound != nullptr){
-                view.setCenter(Vector2f(cityFound->GetPosX(), cityFound->GetPosY()));
-                view.setSize(window.getDefaultView().getSize());    // Reset size
-                view.zoom(0.6);
-                window.setView(view);
-
+                appVariables->SetCameraPosition(Vector2f(cityFound->GetPosX(), cityFound->GetPosY()));
+                appVariables->SetCameraZoom(0.6f);
             }
-        }
-        if (ImGui::Button("Clear Output", ImVec2(100, 40))) {
-            //outputText = "";
         }
 
         ImGui::EndGroup();

@@ -4,43 +4,27 @@
 
 #include "../../header/ui/SfmlApp.h"
 #include "../../header/Map.h"
-#include "../MapDAO.h"
+#include "../../header/MapDAO.h"
 
 SfmlApp::SfmlApp() {
     this->checkAdjacentCitiesUI = new CheckAdjacentCities();
     this->searchCity = new SearchCity();
-    this->shortestRoute = new ShortestRoute();
-    this->longestRoute = new LongestRoute();
-
-    this->map = InitMap();
-    this->city = {""};
-    this->outputText = {""};
-    this->fromCity = {""};
-    this->toCity = {""};
-    this->menuOption = -1;
-    this->selectedCity = -1;
-}
-
-Map *SfmlApp::InitMap() {
-    MapDAO citiDao;
-    Map* map = citiDao.InitMap();
-
-    return map;
+    this->shortestRoute = new DisplayRoute();
+    this->appVariables = new AppVariables();
 }
 
 void SfmlApp::CheckForCityClick(Vector2f mousePosition) {
     // Find if the user just clicked a city
-    City* currentCity = map->GetRoot();
+    City* currentCity = appVariables->GetMap()->GetRoot();
     while (currentCity != nullptr) {
         float dist = sqrt(pow(mousePosition.x - (currentCity->GetPosX() + NODES_RADIUS), 2) + pow(mousePosition.y - (currentCity->GetPosY() + NODES_RADIUS), 2));
 
         if (dist <= 8.0f) {
-            if (selectCityOption == 0) {
-                fromCity = currentCity->GetName();
+            if (appVariables->GetSelectCityOption() == 0) {
+                appVariables->SetFromCity(currentCity->GetName());
             } else {
-                toCity = currentCity->GetName();
+                appVariables->SetToCity(currentCity->GetName());
             }
-
         }
 
         currentCity = currentCity->GetNext();
@@ -82,51 +66,39 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta, View view) {
 
     if (ImGui::Button("Ver ciudades adyascentes", ImVec2(200, 32))) {
         reset = true;
-        menuOption = 0;
+        appVariables->SetMenuOption(0);
     }
     if (ImGui::Button("Buscar", ImVec2(200, 32))) {
         reset = true;
-        menuOption = 1;
+        appVariables->SetMenuOption(1);
     }
-    if (ImGui::Button("Ruta más corta", ImVec2(200, 32))) {
+    if (ImGui::Button("Mostrar ruta", ImVec2(200, 32))) {
         reset = true;
-        menuOption = 2;
-    }
-    if (ImGui::Button("Ruta más larga", ImVec2(200, 32))) {
-        reset = true;
-        menuOption = 3;
+        appVariables->SetMenuOption(2);
     }
 
     ImGui::End();
 
     if (reset == true) {
-        selectCityOption = false;
-        fromCity = "";
-        toCity = "";
+        appVariables->SetSelectCityOption(false);
+        appVariables->SetFromCity("");
+        appVariables->SetToCity("");
 
         checkAdjacentCitiesUI->Clear();
         shortestRoute->Clear();
-        longestRoute->Clear();
     }
 
-    switch (menuOption) {
+    switch (appVariables->GetMenuOption()) {
         case 0:
-            checkAdjacentCitiesUI->ShowUI(&fromCity, &toCity, &selectCityOption);
+            checkAdjacentCitiesUI->ShowUI(appVariables);
             break;
         case 1:
-            searchCity->ShowUI(&city, this->map, window, view);
+            searchCity->ShowUI(appVariables, window, view);
             break;
         case 2:
-            shortestRoute->ShowUI(&fromCity, &toCity, &selectCityOption);
-            break;
-        case 3:
-            longestRoute->ShowUI(&fromCity, &toCity, &selectCityOption);
+            shortestRoute->ShowUI(appVariables);
             break;
     }
-}
-
-void SfmlApp::Print(string msj) {
-    this->outputText += msj + "\n";
 }
 
 void SfmlApp::Run() {
@@ -134,6 +106,10 @@ void SfmlApp::Run() {
     Color backgroundColor = Color(200, 233, 240, 255);
     Color nodesColor = Color(177, 172, 154, 255);
     Color routesColor = Color(145, 145, 145, 255);
+
+    // Font variables
+    Font font;
+    font.loadFromFile("../resources/PoltawskiNowy-Italic-VariableFont_wght.ttf");
 
     // Background variables
     Texture backgroundTexture;
@@ -145,22 +121,13 @@ void SfmlApp::Run() {
     // Scroll variables
     Vector2f clickPosition;
     bool moving = false;
-    float zoom = 2.0f;
     float zoomMultiplier = 0.1f;
 
     Clock deltaClock;
 
-    outputText = "";
-    string inputText1 = {""};
-
     RenderWindow window(VideoMode(896, 504), "Waze of Thrones");
     window.setFramerateLimit(60);
     View view = window.getDefaultView();
-
-    // Initial zoom
-    view.setSize(window.getDefaultView().getSize());
-    view.zoom(zoom);
-    window.setView(view);
 
     ImGui::SFML::Init(window);
 
@@ -205,34 +172,25 @@ void SfmlApp::Run() {
                         Vector2f deltaPos = clickPosition - mousePosition;
 
                         // Update view
-                        view.setCenter(view.getCenter() + deltaPos);
-                        window.setView(view);
-
-                        // Update click position
-                        clickPosition = window.mapPixelToCoords(Vector2i(event.mouseMove.x, event.mouseMove.y));
+                        appVariables->SetCameraPosition(appVariables->GetCameraPosition() + deltaPos);
                     }
                     break;
 
                 case Event::MouseWheelScrolled:
                     if (moving == false) {
-                        zoom -= event.mouseWheelScroll.delta * zoomMultiplier;
-                        zoom = clamp(zoom, 0.5f, 3.0f);
-
-                        // Update view
-                        view.setSize(window.getDefaultView().getSize());    // Reset size
-                        view.zoom(zoom);    // Apply zoom
-                        window.setView(view);
+                        appVariables->SetCameraZoom(appVariables->GetCameraZoom() - (event.mouseWheelScroll.delta * zoomMultiplier));
                     }
 
-                    break;
-                case Event::KeyPressed:
-                    if (event.key.code == Keyboard::Enter)
-                    {
-                        Print("Enter Just Pressed");
-                    }
                     break;
             }
         }
+
+        appVariables->SetCameraZoom(clamp(appVariables->GetCameraZoom(), 0.5f, 3.0f));
+        view.setCenter(appVariables->GetCameraPosition().x, appVariables->GetCameraPosition().y);
+        view.setSize(window.getDefaultView().getSize());
+        view.zoom(appVariables->GetCameraZoom());
+
+        window.setView(view);
 
         DrawUI(window, deltaClock.restart(), view);
 
@@ -241,18 +199,18 @@ void SfmlApp::Run() {
 
         // Draw routes or arcs
         for (int i = 0; i < CITY_CAPACITY; i++) {
-            City *from = map->CityFromIndex(i);
+            City *from = appVariables->GetMap()->CityFromIndex(i);
 
             if (from == nullptr) {
                 continue;
             }
             for (int j = 0; j < CITY_CAPACITY; j++) {
 
-                if (map->GetRoutes()[i][j] == nullptr) {
+                if (appVariables->GetMap()->GetRoutes()[i][j] == nullptr) {
                     continue;
                 }
 
-                City *to = map->CityFromIndex(j);
+                City *to = appVariables->GetMap()->CityFromIndex(j);
 
                 if (to != nullptr) {
                     Vector2f fromPos = Vector2f(from->GetPosX() + NODES_RADIUS, from->GetPosY() + NODES_RADIUS);
@@ -264,14 +222,25 @@ void SfmlApp::Run() {
         }
 
         // Draw cities or nodes
-        City* currentCity = map->GetRoot();
+        City* currentCity = appVariables->GetMap()->GetRoot();
         while (currentCity != nullptr) {
+            // Node
             CircleShape cityNode;
             cityNode.setPosition(currentCity->GetPosX(), currentCity->GetPosY());
             cityNode.setRadius(NODES_RADIUS);
             cityNode.setFillColor(nodesColor);
 
             window.draw(cityNode);
+
+            // Text
+            Text text;
+            text.setFont(font);
+            text.setString(currentCity->GetName());
+            text.setCharacterSize(18);
+            text.setFillColor(Color::Black);
+            text.setPosition(currentCity->GetPosX()  - (NODES_RADIUS * 4), currentCity->GetPosY() - (NODES_RADIUS * 4));
+
+            window.draw(text);
 
             currentCity = currentCity->GetNext();
         }
