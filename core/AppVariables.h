@@ -15,7 +15,7 @@ using namespace sf;
 class AppVariables {
 private:
     // Visuals
-    Vector2f cameraPosition = Vector2f(100, 100);
+    Vector2f cameraPosition = Vector2f(1000, 800);
     float cameraZoom = 2;
 
     // Logic
