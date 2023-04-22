@@ -42,9 +42,7 @@ void CitiDAOTest(){
 
 
 int main() {
-
     //CitiDAOTest();
-
     SfmlTest();
     //GraphTest();
 
