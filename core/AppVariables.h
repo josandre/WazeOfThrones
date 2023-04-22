@@ -20,8 +20,7 @@ private:
 
     // Logic
     Map* map;
-    vector<int> adjacentCities;
-    vector<int> pathRoutes;
+    City* selectedCity;
 
     // Static input fields
     string city;
@@ -31,7 +30,6 @@ private:
     int menuOption;
     int selectCityOption;
     int selectedRouteOption;
-    int selectedCity;
 
 public:
     explicit AppVariables();
@@ -68,9 +66,6 @@ public:
 
     int GetSelectedRouteOption();
     void SetSelectedRouteOption(int selectedRouteOption);
-
-    int GetSelectedCity();
-    void SetSelectedCity(int selectedCity);
 };
 
 

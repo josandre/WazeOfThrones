@@ -42,7 +42,6 @@ City *Map::CityFromIndex(int cityIndex) {
     return currentCity;
 }
 
-
 void Map::printMatrix() {
     for(int i = 0; i < 29; i++){
         cout << CityFromIndex(i)->GetName() << " : ";
@@ -119,13 +118,10 @@ string Map::DijkstraAlgo(Map map, int src, int to)
         }
     }
 
-
-
    /* cout<<"Vertex\t\tDistance from source vertex"<<endl;
     cout << map.CityFromIndex(src)->GetName() << "\t\t\t" << distance[to] << "\t\t\t"
          << map.CityFromIndex(to)->GetName() << endl;
          */
-
 
     return map.CityFromIndex(src)->GetName() + "\t\t\t" + to_string(distance[to]) + "\t\t\t" + map.CityFromIndex(to)->GetName();
 }
@@ -172,9 +168,47 @@ bool Map::AddRoute(string from, string to, float distance, float time) {
         return false;
     }
 
+    // Double side route
     Route* newRoute = new Route("", distance, time);
     this->routes[fromIndex][toIndex] = newRoute;
+    this->routes[toIndex][fromIndex] = newRoute;
     return true;
+}
+
+void Map::ClearHighlights() {
+    City* currentCity = this->rootCity;
+
+    while (currentCity != nullptr) {
+        currentCity->SetIsHighlighted(false);
+        currentCity = currentCity->GetNext();
+    }
+
+    for (int i = 0; i < CITY_CAPACITY; i++) {
+        for (int j = 0; j < CITY_CAPACITY; j++) {
+            if (routes[i][j] == nullptr) {
+                continue;
+            }
+
+            routes[i][j]->SetIsHighlighted(false);
+        }
+    }
+}
+
+void Map::HighlightAdjacentCities(string from) {
+    ClearHighlights();
+    int cityIndex = CityIndex(from);
+
+    if (cityIndex != -1) {
+        for (int i = 0; i < CITY_CAPACITY; i++) {
+            if (routes[cityIndex][i] == nullptr) {
+                continue;
+            }
+
+            CityFromIndex(i)->SetIsHighlighted(true);
+            routes[cityIndex][i]->SetIsHighlighted(true);
+        }
+    }
+
 }
 
 void Map::Print() {

@@ -7,6 +7,7 @@
 
 #define CITY_CAPACITY 100
 
+#include <vector>
 #include "City.h"
 #include "Route.h"
 #include "iostream"
@@ -44,6 +45,10 @@ public:
     bool AddRoute(string from, string to, float distance, float time);
 
     Hash *getTable();
+
+    void ClearHighlights();
+
+    void HighlightAdjacentCities(string from);
 
     void Print();
 };

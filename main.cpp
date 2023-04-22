@@ -12,10 +12,6 @@ void SfmlTest() {
     app->Run();
 }
 
-
-
-
-
 void GraphTest() {
     Map* map = new Map();
     map->AddCity("A", 0, 0, 1);

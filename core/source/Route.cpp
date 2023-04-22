@@ -23,3 +23,10 @@ float Route::GetTime() {
 void Route::SetTime(float value) {
     this->time = value;
 }
+
+bool Route::IsHighlighted() {
+    return this->isHighlighted;
+}
+void Route::SetIsHighlighted(bool value) {
+    this->isHighlighted = value;
+}

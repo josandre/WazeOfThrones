@@ -6,6 +6,7 @@
 #define WAZEOFTHRONES_SFMLAPP_H
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include <math.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -22,7 +23,7 @@
 #include "../../AppVariables.h"
 
 #define NODES_RADIUS 8.0f
-#define ROUTES_THICKNESS 4.0f
+#define ROUTES_THICKNESS 2.0f
 
 using namespace sf;
 using namespace std;

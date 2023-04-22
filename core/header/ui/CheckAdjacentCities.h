@@ -23,41 +23,23 @@ using namespace std;
 
 class CheckAdjacentCities {
 public:
-    char* items[2] = { "Seleccionar origen", "Seleccionar destino" };
-    char* current_item = items[0];
 
     void Clear() {
-        current_item = items[0];
+
     }
 
     void ShowUI(AppVariables* appVariables) {
         ImGui::Begin("Ver ciudades adyascentes");
         ImGui::BeginGroup();
 
-        // To select which city to pick
-        if (ImGui::BeginCombo("##combo", current_item)) // The second parameter is the label previewed before opening the combo.
-        {
-            for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-            {
-                bool is_selected = (current_item == items[n]); // You can store your selection however you want, outside or inside your objects
-                if (ImGui::Selectable(items[n], current_item, is_selected)) {
-                    current_item = items[n];
-                    appVariables->SetSelectCityOption(n);
-                }
-
-                if (is_selected) {
-                    ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-                }
-            }
-            ImGui::EndCombo();
-        }
-
         // Text fields
-        ImGui::InputText("Origen", appVariables->GetFromCity(), 100);
-        ImGui::InputText("Destino", appVariables->GetToCity(), 100);
+        ImGui::InputText("Ciudad", appVariables->GetFromCity(), 100);
 
-        if (ImGui::Button("Mostrar Ruta", ImVec2(100, 40))) {
-            //Print(fromCity);
+        if (ImGui::Button("Mostrar Adyacencias", ImVec2(200, 40))) {
+            appVariables->GetMap()->HighlightAdjacentCities(*appVariables->GetFromCity());
+        }
+        if (ImGui::Button("Limpiar", ImVec2(200, 40))) {
+            appVariables->GetMap()->ClearHighlights();
         }
 
         ImGui::EndGroup();

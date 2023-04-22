@@ -46,3 +46,11 @@ float City::GetPosY() {
 void City::SetPosY(float value) {
     this->posY = value;
 }
+
+bool City::IsHighlighted() {
+    return this->isHighlighted;
+}
+
+void City::SetIsHighlighted(bool value) {
+    this->isHighlighted = value;
+}

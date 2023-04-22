@@ -3,8 +3,6 @@
 //
 
 #include "../../header/ui/SfmlApp.h"
-#include "../../header/Map.h"
-#include "../../header/MapDAO.h"
 
 SfmlApp::SfmlApp() {
     this->checkAdjacentCitiesUI = new CheckAdjacentCities();
@@ -20,6 +18,8 @@ void SfmlApp::CheckForCityClick(Vector2f mousePosition) {
         float dist = sqrt(pow(mousePosition.x - (currentCity->GetPosX() + NODES_RADIUS), 2) + pow(mousePosition.y - (currentCity->GetPosY() + NODES_RADIUS), 2));
 
         if (dist <= 8.0f) {
+            appVariables->GetMap()->ClearHighlights();
+
             if (appVariables->GetSelectCityOption() == 0) {
                 appVariables->SetFromCity(currentCity->GetName());
             } else {
@@ -83,6 +83,7 @@ void SfmlApp::DrawUI(RenderWindow &window, Time delta, View view) {
         appVariables->SetSelectCityOption(false);
         appVariables->SetFromCity("");
         appVariables->SetToCity("");
+        appVariables->GetMap()->ClearHighlights();
 
         checkAdjacentCitiesUI->Clear();
         shortestRoute->Clear();
@@ -105,7 +106,13 @@ void SfmlApp::Run() {
     // Constants
     Color backgroundColor = Color(200, 233, 240, 255);
     Color nodesColor = Color(177, 172, 154, 255);
+    Color highlightedNodeColor = Color(230, 208, 18, 255);
+
+    Color fromNodeColor = Color(18, 164, 230);
+    Color toNodeColor = Color(37, 230, 18);
+
     Color routesColor = Color(145, 145, 145, 255);
+    Color highlightedRouteColor = Color(18, 189, 230, 255);
 
     // Font variables
     Font font;
@@ -216,7 +223,11 @@ void SfmlApp::Run() {
                     Vector2f fromPos = Vector2f(from->GetPosX() + NODES_RADIUS, from->GetPosY() + NODES_RADIUS);
                     Vector2f toPos = Vector2f(to->GetPosX() + NODES_RADIUS, to->GetPosY() + NODES_RADIUS);
 
-                    window.draw(DrawLine(fromPos, toPos, ROUTES_THICKNESS, routesColor));
+                    if (appVariables->GetMap()->GetRoutes()[i][j]->IsHighlighted()) {
+                        window.draw(DrawLine(fromPos, toPos, ROUTES_THICKNESS, highlightedRouteColor));
+                    } else {
+                        window.draw(DrawLine(fromPos, toPos, ROUTES_THICKNESS, routesColor));
+                    }
                 }
             }
         }
@@ -228,7 +239,18 @@ void SfmlApp::Run() {
             CircleShape cityNode;
             cityNode.setPosition(currentCity->GetPosX(), currentCity->GetPosY());
             cityNode.setRadius(NODES_RADIUS);
-            cityNode.setFillColor(nodesColor);
+
+            if (currentCity->IsHighlighted() == true) {
+                cityNode.setFillColor(highlightedNodeColor);
+            } else {
+                if (currentCity->GetName() == *appVariables->GetFromCity()) {
+                    cityNode.setFillColor(fromNodeColor);
+                } else if (currentCity->GetName() == *appVariables->GetToCity()) {
+                    cityNode.setFillColor(toNodeColor);
+                } else {
+                    cityNode.setFillColor(nodesColor);
+                }
+            }
 
             window.draw(cityNode);
 

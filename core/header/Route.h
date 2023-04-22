@@ -14,7 +14,7 @@ private:
     string name;
     float distance;
     float time;
-
+    bool isHighlighted;
 
 public:
     explicit Route(string name, float distance, float time);
@@ -24,6 +24,9 @@ public:
 
     float GetTime();
     void SetTime(float value);
+
+    bool IsHighlighted();
+    void SetIsHighlighted(bool value);
 };
 
 

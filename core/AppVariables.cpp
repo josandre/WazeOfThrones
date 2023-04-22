@@ -12,7 +12,6 @@ AppVariables::AppVariables() {
     this->fromCity = {""};
     this->toCity = {""};
     this->menuOption = -1;
-    this->selectedCity = -1;
 }
 
 Vector2f AppVariables::GetCameraPosition() {
@@ -34,20 +33,6 @@ Map *AppVariables::GetMap() const {
 }
 void AppVariables::SetMap(Map *map) {
     AppVariables::map = map;
-}
-
-vector<int> AppVariables::GetAdjacentCities() {
-    return adjacentCities;
-}
-void AppVariables::SetAdjacentCities(vector<int> adjacentCities) {
-    AppVariables::adjacentCities = adjacentCities;
-}
-
-vector<int> AppVariables::GetPathRoutes() {
-    return pathRoutes;
-}
-void AppVariables::SetPathRoutes(vector<int> pathRoutes) {
-    AppVariables::pathRoutes = pathRoutes;
 }
 
 string* AppVariables::GetCity() {
@@ -91,11 +76,4 @@ int AppVariables::GetSelectedRouteOption() {
 }
 void AppVariables::SetSelectedRouteOption(int selectedRouteOption) {
     AppVariables::selectedRouteOption = selectedRouteOption;
-}
-
-int AppVariables::GetSelectedCity() {
-    return selectedCity;
-}
-void AppVariables::SetSelectedCity(int selectedCity) {
-    AppVariables::selectedCity = selectedCity;
 }

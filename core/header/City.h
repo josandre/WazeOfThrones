@@ -17,6 +17,7 @@ private:
 
     float posX;
     float posY;
+    bool isHighlighted;
 
 public:
     explicit City(string name, float posX, float posY, int index);
@@ -35,6 +36,9 @@ public:
 
     float GetPosY();
     void SetPosY(float value);
+
+    bool IsHighlighted();
+    void SetIsHighlighted(bool value);
 };
 
 
