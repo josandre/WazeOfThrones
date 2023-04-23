@@ -26,20 +26,17 @@ void GraphTest() {
 
 
 
-void CitiDAOTest(){
+Map CitiDAOTest(){
     MapDAO citiDao;
     Map* map = citiDao.InitMap();
-    cout << map->DijkstraAlgo(map, 0, 1) << endl;
-
-    //map->printMatrix();
+   return *map;
 
 }
 
-
-
 int main() {
-    //CitiDAOTest();
-    SfmlTest();
+
+    //SfmlTest();
+
     //GraphTest();
 
     return 0;

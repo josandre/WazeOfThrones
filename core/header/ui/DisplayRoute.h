@@ -59,7 +59,7 @@ public:
         if (ImGui::Button("Mostrar Ruta", ImVec2(100, 40))) {
             int fromIndex = appVariables->GetMap()->CityIndex(*appVariables->GetFromCity());
             int toIndex = appVariables->GetMap()->CityIndex(*appVariables->GetToCity());
-            appVariables->GetMap()->DijkstraAlgo(appVariables->GetMap(), fromIndex, toIndex);
+            appVariables->GetMap()->dijkstra(appVariables->GetMap(), fromIndex, toIndex);
         }
 
         ImGui::EndGroup();

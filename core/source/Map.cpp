@@ -4,6 +4,8 @@
 
 #include "../header/Map.h"
 
+int NO_PARENT = -1;
+
 int Map::CityIndex(string cityName) {
 
     if (this->rootCity == nullptr) {
@@ -77,57 +79,69 @@ Map::Map() {
     }
 }
 
-int Map::miniDist(int distance[], bool Tset[]) {
-    int minimum = INT_MAX, ind;
 
-    for(int k= 0; k < 6; k++)
-    {
-        if(Tset[k] == false && distance[k] <= minimum)
-        {
-            minimum=distance[k];
-            ind = k;
-        }
-    }
-    return ind;
-}
-
-string Map::DijkstraAlgo(Map* map, int src, int to)
+void Map::highlightPath(Map map, int from, int to, vector<int> parents, bool isFirstCall)
 {
-    int distance[29];
-    bool Tset[29];
-
-
-    for(int k = 0; k < 29; k++)
-    {
-        distance[k] = INT_MAX;
-        Tset[k] = false;
+    if (to == NO_PARENT) {
+        return;
     }
 
-    distance[src] = 0;
+    if(!isFirstCall) {
+        map.GetRoutes()[to][from]->SetIsHighlighted(true);
+    }
 
-    for(int k = 0; k < 29; k++)
-    {
-        int m = miniDist(distance,Tset);
-        Tset[m] = true;
+    highlightPath(map, to, parents[to], parents, false);
+    cout << to << " -> ";
+}
 
-        for(int k = 0; k < 29; k++)
-        {
 
-            if(!Tset[k] && map->GetRoutes()[m][k] && distance[m] != INT_MAX && distance[m] + map->GetRoutes()[m][k]->GetDistance() < distance[k])
-                distance[k] = distance[m] + map->GetRoutes()[m][k]->GetDistance();
+void Map::dijkstra(Map *map, int from, int to) {
+    int nVertices = 29;
+    vector<int> shortestDistances(nVertices);
+    vector<bool> added(nVertices);
+
+    for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
+        shortestDistances[vertexIndex] = INT_MAX;
+        added[vertexIndex] = false;
+    }
+
+    shortestDistances[from] = 0;
+    vector<int> parents(nVertices);
+
+    parents[from] = NO_PARENT;
+
+    for (int i = 1; i < nVertices; i++) {
+
+        int nearestVertex = -1;
+        int shortestDistance = INT_MAX;
+        for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
+            if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance) {
+                nearestVertex = vertexIndex;
+                shortestDistance = shortestDistances[vertexIndex];
+            }
+        }
+
+        if(nearestVertex >= 0) {
+
+            added[nearestVertex] = true;
+
+            for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
+                auto route = map->GetRoutes()[nearestVertex][vertexIndex];
+
+                if (route != nullptr) {
+                    int edgeDistance = route->GetDistance();
+                    if (edgeDistance > 0 && ((shortestDistance + edgeDistance) < shortestDistances[vertexIndex])) {
+                        parents[vertexIndex] = nearestVertex;
+                        shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
+
+                    }
+                }
+            }
         }
     }
 
-   /* cout<<"Vertex\t\tDistance from source vertex"<<endl;
-    cout << map.CityFromIndex(src)->GetName() << "\t\t\t" << distance[to] << "\t\t\t"
-         << map.CityFromIndex(to)->GetName() << endl;
-         */
-
-    map->GetRoutes()[0][1]->SetIsHighlighted(true);
-    cout << "HOLA!" << endl;
-    return map->CityFromIndex(src)->GetName() + "\t\t\t" + to_string(distance[to]) + "\t\t\t" + map->CityFromIndex(to)->GetName();
+    highlightPath(*map, from, to, parents, true);
 }
-
 
 City* Map::GetRoot() {
     return this->rootCity;

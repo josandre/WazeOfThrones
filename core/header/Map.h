@@ -25,9 +25,9 @@ private:
 public:
     explicit Map();
 
-    int miniDist(int [] , bool[]);
+    void highlightPath(Map , int , int , vector<int> parents, bool );
 
-    string DijkstraAlgo(Map*, int, int);
+    void dijkstra(Map *map, int from, int to);
 
     int getCityCount();
 
