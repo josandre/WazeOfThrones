@@ -55,6 +55,36 @@ public:
         map->AddRoute("PUERTO BLANCO", "VARAMAR", 2, 8);
 
         map->AddRoute("TORRHEN", "VARAMAR", 2, 8);
+
+
+        map->AddRoute("VARAMAR", "LOS DEDOS", 2, 8);
+        map->AddRoute("LOS DEDOS", "NIDO DE AGUILAS", 2, 8);
+        map->AddRoute("NIDO DE AGUILAS", "EL VALLE", 2, 8);
+        map->AddRoute("EL VALLE", "VARAMAR", 2, 8);
+        map->AddRoute("AGUAS DULCES", "EL VALLE", 2, 8);
+        map->AddRoute("AGUAS DULCES", "COLMILLO DORADO", 2, 8);
+        map->AddRoute("PUERTO GAVIOTA", "EL VALLE", 2, 8);
+        map->AddRoute("COLMILLO DORADO", "HARRENHAL", 2, 8);
+        map->AddRoute("HARRENHAL", "ASTAS", 2, 8);
+        map->AddRoute("ROCA CASTERLY", "COLMILLO DORADO", 2, 8);
+        map->AddRoute("PUERTO GAVIOTA", "ASTAS", 2, 8);
+        map->AddRoute("ROCA CASTERLY", "CUEVA", 2, 8);
+        map->AddRoute("CUEVA", "Aguas Negras", 2, 8);
+        map->AddRoute("Aguas Negras", "DESEMBARCO DEL REY", 2, 8);
+        map->AddRoute("LANNISPORT", "ROCA CASTERLY", 2, 8);
+        map->AddRoute("LANNISPORT", "EL DOMINIO", 2, 8);
+        map->AddRoute("EL DOMINIO", "LADERA", 2, 8);
+        map->AddRoute("LADERA", "Aguas Negras", 2, 8);
+        map->AddRoute("BOSQUE ALTO", "DESEMBARCO DEL REY", 2, 8);
+        map->AddRoute("SENDA HUESO", "EL DOMINIO", 2, 8);
+        map->AddRoute("SENDA HUESO", "BOSQUE ALTO", 2, 8);
+        map->AddRoute("BOSQUE ALTO", "BASTION DE TORMENTAS", 2, 8);
+        map->AddRoute("BOSQUE ALTO", "BASTION DE TORMENTAS", 2, 8);
+        map->AddRoute("VARAMAR", "COLMILLO DORADO", 2, 8);
+        map->AddRoute("ASTAS", "DESEMBARCO DEL REY", 2, 8);
+        map->AddRoute("EL VALLE", "HARRENHAL", 2, 8);
+        map->AddRoute("HARRENHAL", "CUEVA", 2, 8);
+        map->AddRoute("CUEVA", "EL DOMINIO", 2, 8);
         return map;
     }
 };
