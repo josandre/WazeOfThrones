@@ -91,7 +91,7 @@ int Map::miniDist(int distance[], bool Tset[]) {
     return ind;
 }
 
-string Map::DijkstraAlgo(Map map, int src, int to)
+string Map::DijkstraAlgo(Map* map, int src, int to)
 {
     int distance[29];
     bool Tset[29];
@@ -113,8 +113,8 @@ string Map::DijkstraAlgo(Map map, int src, int to)
         for(int k = 0; k < 29; k++)
         {
 
-            if(!Tset[k] && map.GetRoutes()[m][k] && distance[m] != INT_MAX && distance[m] + map.GetRoutes()[m][k]->GetDistance() < distance[k])
-                distance[k] = distance[m] + map.GetRoutes()[m][k]->GetDistance();
+            if(!Tset[k] && map->GetRoutes()[m][k] && distance[m] != INT_MAX && distance[m] + map->GetRoutes()[m][k]->GetDistance() < distance[k])
+                distance[k] = distance[m] + map->GetRoutes()[m][k]->GetDistance();
         }
     }
 
@@ -123,7 +123,9 @@ string Map::DijkstraAlgo(Map map, int src, int to)
          << map.CityFromIndex(to)->GetName() << endl;
          */
 
-    return map.CityFromIndex(src)->GetName() + "\t\t\t" + to_string(distance[to]) + "\t\t\t" + map.CityFromIndex(to)->GetName();
+    map->GetRoutes()[0][1]->SetIsHighlighted(true);
+    cout << "HOLA!" << endl;
+    return map->CityFromIndex(src)->GetName() + "\t\t\t" + to_string(distance[to]) + "\t\t\t" + map->CityFromIndex(to)->GetName();
 }
 
 

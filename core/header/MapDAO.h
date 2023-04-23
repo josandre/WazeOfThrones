@@ -49,7 +49,6 @@ public:
         map->AddRoute("BASTION KAR", "PUERTO BLANCO", 2, 8);
         map->AddRoute("PUERTO BLANCO", "INVERNALIA", 1, 8);
 
-        map->AddRoute("INVERNALIA", "PUERTO BLANCO", 2, 8);
         map->AddRoute("INVERNALIA", "TORRHEN", 2, 8);
 
         map->AddRoute("PUERTO BLANCO", "VARAMAR", 2, 8);

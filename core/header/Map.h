@@ -27,7 +27,7 @@ public:
 
     int miniDist(int [] , bool[]);
 
-    string DijkstraAlgo(Map, int, int);
+    string DijkstraAlgo(Map*, int, int);
 
     int getCityCount();
 

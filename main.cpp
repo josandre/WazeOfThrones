@@ -29,7 +29,7 @@ void GraphTest() {
 void CitiDAOTest(){
     MapDAO citiDao;
     Map* map = citiDao.InitMap();
-    cout << map->DijkstraAlgo(*map, 0, 1) << endl;
+    cout << map->DijkstraAlgo(map, 0, 1) << endl;
 
     //map->printMatrix();
 
