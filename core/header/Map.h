@@ -5,9 +5,11 @@
 #ifndef WAZEOFTHRONES_MAP_H
 #define WAZEOFTHRONES_MAP_H
 
-#define CITY_CAPACITY 100
+#define CITY_CAPACITY 400
 
 #include <vector>
+#include <math.h>
+
 #include "City.h"
 #include "Route.h"
 #include "iostream"
@@ -42,7 +44,7 @@ public:
 
     bool AddCity(string name, float posX, float posY, int index);
 
-    bool AddRoute(string from, string to, float distance, float time);
+    bool AddRoute(string from, string to);
 
     Hash *getTable();
 

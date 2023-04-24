@@ -18,9 +18,9 @@ void GraphTest() {
     map->AddCity("B", 0, 0, 1);
     map->AddCity("C", 0, 0, 1);
 
-    map->AddRoute("A", "B", 10, 5);
-    map->AddRoute("A", "C", 1, 3);
-    map->AddRoute("B", "C", 2, 8);
+    map->AddRoute("A", "B");
+    map->AddRoute("A", "C");
+    map->AddRoute("B", "C");
 
 }
 
