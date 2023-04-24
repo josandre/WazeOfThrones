@@ -120,7 +120,7 @@ void SfmlApp::Run() {
 
     // Background variables
     Texture backgroundTexture;
-    backgroundTexture.loadFromFile("../resources/WazeOfThronesMap.png");
+    backgroundTexture.loadFromFile("../resources/WazeOfThrones2.png");
     backgroundTexture.setSmooth(true);
     backgroundTexture.setRepeated(false);
     Sprite background(backgroundTexture);

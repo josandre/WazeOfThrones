@@ -37,7 +37,6 @@ private:
 
 public:
     explicit SfmlApp();
-
     void CheckForCityClick(Vector2f mousePosition);
     Vector2f normalizeVector(Vector2f source);
     RectangleShape DrawLine(Vector2f from, Vector2f to, float thickness, Color color);

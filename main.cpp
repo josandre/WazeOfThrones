@@ -35,7 +35,7 @@ Map CitiDAOTest(){
 
 int main() {
 
-    //SfmlTest();
+    SfmlTest();
 
     //GraphTest();
 
