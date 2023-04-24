@@ -8,6 +8,7 @@
 AppVariables::AppVariables() {
     MapDAO citiDao;
     this->map = citiDao.InitMap();
+    this->map->ClearHighlights();
     this->city = {""};
     this->fromCity = {""};
     this->toCity = {""};

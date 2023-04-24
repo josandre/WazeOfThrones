@@ -192,7 +192,7 @@ void SfmlApp::Run() {
             }
         }
 
-        appVariables->SetCameraZoom(clamp(appVariables->GetCameraZoom(), 0.5f, 3.0f));
+        appVariables->SetCameraZoom(clamp(appVariables->GetCameraZoom(), 0.5f, 5.0f));
         view.setCenter(appVariables->GetCameraPosition().x, appVariables->GetCameraPosition().y);
         view.setSize(window.getDefaultView().getSize());
         view.zoom(appVariables->GetCameraZoom());
