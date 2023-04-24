@@ -33,17 +33,19 @@ bool Hash::equalSIgnoreCase(std::string str1, std::string str2) {
 }
 
 
-City *Hash::getCity(string name) {
-    for(int i = 0; i < this->MAX; i++){
-        City *aux = this->city[i];
-        if(equalSIgnoreCase(aux->GetName(), name)){
-            return aux;
+City *Hash::getCity(int index, string name) {
+    City *city = this->city[index];
+
+    while (city != nullptr){
+        if(city->GetName() == name){
+            return city;
         }
+        city = city->GetNext();
     }
+
     return nullptr;
 }
 
 int Hash::hashing(int num) {
-    cout << (num%(this->MAX - 1)) << endl;
     return (num%(this->MAX - 1));
 }

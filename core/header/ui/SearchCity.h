@@ -31,8 +31,8 @@ public:
         ImGui::InputText("Ciudad", appVariables->GetCity(), 100);
 
         if (ImGui::Button("Buscar", ImVec2(100, 40))) {
-            appVariables->GetMap()->getTable();
-            City *cityFound = appVariables->GetMap()->getTable()->getCity(*appVariables->GetCity());
+            int indexCity = appVariables->GetMap()->CityIndex(*appVariables->GetCity());
+            City *cityFound = appVariables->GetMap()->getTable()->getCity(appVariables->GetMap()->getTable()->hashing(indexCity), *appVariables->GetCity());
 
             if(cityFound != nullptr){
                 appVariables->SetCameraPosition(Vector2f(cityFound->GetPosX(), cityFound->GetPosY()));
