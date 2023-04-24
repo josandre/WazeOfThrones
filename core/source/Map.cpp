@@ -175,17 +175,23 @@ bool Map::AddCity(string name, float posX, float posY, int index) {
     this->cityCount++;
 }
 
-bool Map::AddRoute(string from, string to, float distance, float time) {
-    int toIndex = CityIndex(to);
+bool Map::AddRoute(string from, string to) {
     int fromIndex = CityIndex(from);
+    int toIndex = CityIndex(to);
 
     // Make sure the nodes exist in the graph
     if (fromIndex == -1 || toIndex == -1) {
         return false;
     }
 
+    City* fromCity = CityFromIndex(fromIndex);
+    City* toCity = CityFromIndex(toIndex);
+
+    float dist = sqrt(pow(fromCity->GetPosX() - toCity->GetPosX(), 2) + pow(fromCity->GetPosY() - toCity->GetPosY(), 2));
+    float time = dist / 5;
+
     // Double side route
-    Route* newRoute = new Route("", distance, time);
+    Route* newRoute = new Route("", dist, time);
     this->routes[fromIndex][toIndex] = newRoute;
     this->routes[toIndex][fromIndex] = newRoute;
     return true;

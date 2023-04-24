@@ -6,7 +6,6 @@
 #define WAZEOFTHRONES_SFMLAPP_H
 
 #include <SFML/Graphics.hpp>
-#include <algorithm>
 #include <math.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>

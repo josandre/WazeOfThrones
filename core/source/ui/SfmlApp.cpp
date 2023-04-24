@@ -111,7 +111,7 @@ void SfmlApp::Run() {
     Color fromNodeColor = Color(18, 164, 230);
     Color toNodeColor = Color(37, 230, 18);
 
-    Color routesColor = Color(145, 145, 145, 255);
+    Color routesColor = Color(145, 145, 145, 145);
     Color highlightedRouteColor = Color(18, 189, 230, 255);
 
     // Font variables
@@ -228,6 +228,19 @@ void SfmlApp::Run() {
                     } else {
                         window.draw(DrawLine(fromPos, toPos, ROUTES_THICKNESS, routesColor));
                     }
+
+                    float x = (fromPos.x + toPos.x) / 2;
+                    float y = (fromPos.y + toPos.y) / 2;
+
+                    // Distance Text
+                    Text text;
+                    text.setFont(font);
+                    text.setString(to_string((int)(appVariables->GetMap()->GetRoutes()[i][j]->GetDistance())));
+                    text.setCharacterSize(12);
+                    text.setFillColor(Color(95, 95, 95, 255));
+                    text.setPosition(x, y);
+
+                    window.draw(text);
                 }
             }
         }
